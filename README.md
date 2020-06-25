@@ -2,4 +2,4 @@
 [![codecov](https://codecov.io/gh/alexanderlebedev1989/job4j_grabber/branch/master/graph/badge.svg)](https://codecov.io/gh/alexanderlebedev1989/job4j_grabber)
 
 
-Проект "Аргегатора Java Вакансий"
+Проект "Агрегатор Java Вакансий"
