@@ -12,6 +12,7 @@ import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
+
     public static void main(String[] args) {
         String path = "./src/main/resources/rabbit.properties";
         try {
