@@ -3,24 +3,25 @@ package ru.job4j.quartz;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
-
     public static void main(String[] args) {
-        String path = "./src/main/resources/rabbit.properties";
+
+        AlertRabbit alRabbit = new AlertRabbit();
+        Properties properties = alRabbit.getProperties();
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDetail job = newJob(Rabbit.class).build();
             SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(timeInterval(path))
+                    .withIntervalInSeconds(Integer.parseInt(properties.getProperty("rabbit.interval")))
                     .repeatForever();
             Trigger trigger = newTrigger()
                     .startNow()
@@ -32,17 +33,17 @@ public class AlertRabbit {
         }
     }
 
-    public static int timeInterval(String path) {
-        int interval;
-        try (BufferedReader read = new BufferedReader(new FileReader(path))) {
-             String[] str = read.readLine().split("=");
-             interval = Integer.parseInt(str[1]);
-             return interval;
+    public Properties getProperties() {
+        try (InputStream in = AlertRabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            return config;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        throw new IllegalStateException("не удалось получить значение");
+        throw new IllegalStateException("не удалось получить аргументы");
     }
+
 
     public static class Rabbit implements Job {
         @Override
@@ -50,6 +51,4 @@ public class AlertRabbit {
             System.out.println("Rabbit runs here ...");
         }
     }
-
-
 }
