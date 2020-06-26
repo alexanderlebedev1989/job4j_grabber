@@ -13,7 +13,6 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
     public static void main(String[] args) {
-
         AlertRabbit alRabbit = new AlertRabbit();
         Properties properties = alRabbit.getProperties();
         try {
