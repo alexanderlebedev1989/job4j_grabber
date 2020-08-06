@@ -18,7 +18,8 @@ notifications:
     recipients:
       -lebedev_alexander@mail.ru
     on_success: never # default: change
-    on_failure: always # default: al,ways
-    env:
-      global:
-        - CODECOV_TOKEN="405b95f8-ec6c-43e3-b0bc-b30ecbbfb96f"
+    on_failure: always # default: always
+
+env:
+  global:
+    - CODECOV_TOKEN="405b95f8-ec6c-43e3-b0bc-b30ecbbfb96f"
